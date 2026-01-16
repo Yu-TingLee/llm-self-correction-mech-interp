@@ -9,12 +9,12 @@ If you use gated Hugging Face models, export your token first:
 export HF_TOKEN="<YOUR_TOKEN_HERE>"
 ```
 ### Intrinsic Self-Correction
-- isc0_create_split.py: Create stratified train/test splits
+- isc0_create_split.py: Create stratified train/test splits.
 - isc1_text_exp.py: Run multi-round text experiments (toxification + detoxification) and sample prompt-induced shifts.
 - isc2_plotting.py: Plots figures of toxicity trajectories across rounds.
   
 ### Steering
-- isc0_create_split.py: Create stratified train/test splits
+- isc0_create_split.py: Create stratified train/test splits.
 - steering0_preprocess.py: Pre-process the dataset and sort the dataset in increasing/decreasing toxicity.
 - steering1_build.py: Build the steering vectors from training datasets with difference-in-means over hidden states.
 - steering2_injection.py: Inject steering vectors during generation.
