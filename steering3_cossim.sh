@@ -12,21 +12,15 @@ NCCL_IB_DISABLE=1
 export NCCL_P2P_DISABLE
 export NCCL_IB_DISABLE
 
-
-# data_tags: Which dataset to use,
-# data_ratio: How many data should be selected: 1: 100% samples, 0.8: top-80% toxic/non-toxic score, etc.
-
 MODELS=(
   "Qwen/Qwen2.5-3B-Instruct"
   "Qwen/Qwen2.5-7B-Instruct"
   "mistralai/Mistral-7B-Instruct-v0.3"
   "LiquidAI/LFM2-2.6B-Exp"
-  "HuggingFaceH4/zephyr-7b-beta"
   "HuggingFaceH4/zephyr-7b-alpha"
+  "HuggingFaceH4/zephyr-7b-beta"
 )
 
 for m in "${MODELS[@]}"; do
-  python3 steering1_build.py --model_dir "$m" --data_tags 1 --data_ratio 1
+  python3 steering3_cossim.py --model_name "$m"
 done
-
-

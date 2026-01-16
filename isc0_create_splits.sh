@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 set -e
 # source venv/bin/activate
-python3 steering0_preprocess.py
+python3 isc0_create_splits.py
