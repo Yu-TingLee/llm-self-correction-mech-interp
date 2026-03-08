@@ -7,6 +7,16 @@ from collections import defaultdict
 from sklearn.metrics.pairwise import cosine_similarity
 import pickle
 
+plt.rcParams.update({
+        'font.size': 10,
+        'axes.titlesize': 11,
+        'axes.labelsize': 10,
+        'xtick.labelsize': 9,
+        'ytick.labelsize': 9,
+        'legend.fontsize': 8,
+        'lines.linewidth': 1.5
+    })
+
 def parse_hidden_states(num_data, num_rounds, output_dir="hidden_states"):
     hidden = []
     for d in range(num_data):
@@ -65,7 +75,7 @@ def get_cossim(args):
                         result_all[f"{condition}_round_{round+1}"].append((layer,cval))
 
     plt.clf()
-    plt.figure(figsize=(3.44, 2.8))
+    plt.figure(figsize=(3.5, 3.5))
     for ikey,ivals in result_all.items():
         ivals_avg = defaultdict(list)
         for ival in ivals:
@@ -81,8 +91,8 @@ def get_cossim(args):
         plt.plot(x, [0 for _ in y], color="black")
         
     plt.xlim(left=1, right=max(x)) 
-    plt.xlabel("layer", fontsize=11, labelpad=4)
-    plt.ylabel("cosine similarity", fontsize=11, labelpad=0)
+    plt.xlabel("Layer", fontsize=11, labelpad=4)
+    plt.ylabel("Cosine similarity", fontsize=11, labelpad=0)
     plt.title(f"{model_basename}",fontsize=12, weight = 'bold', pad=6)
     plt.legend(loc="best",fontsize=6)
     plt.tight_layout(pad=0.1)

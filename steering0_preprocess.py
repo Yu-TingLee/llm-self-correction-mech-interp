@@ -83,8 +83,6 @@ def run_and_save_json(data_id, run_function):
 
 #     return post_process(t_prompt_score, nt_prompt_score)
 
-
-
 def run_realtoxicity(limit=2000000):
     data_toxic=pd.read_json("./data/toxic_train_4k.jsonl", lines=True)
     data_notoxic=pd.read_json("./data/non_toxic_train_4k.jsonl",lines=True)

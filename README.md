@@ -21,7 +21,15 @@ export HF_TOKEN="<YOUR_TOKEN_HERE>"
 - steering2_plotting_inj.sh: Produces figures of toxicity change across layers.
 - steering3_cossim.py: Plots the cosine similarity between steering vectors and prompt-induced shifts.
 
+## Setup venv and run experiments
+
+```sh
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
 Then, run all the experiments with:
+
 ```sh
 # ISC exps
 bash isc0_create_splits.sh
