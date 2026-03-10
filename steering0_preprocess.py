@@ -1,11 +1,9 @@
 import argparse
 import os
-
 import pandas as pd
 from tqdm import tqdm
 from transformers import logging
-
-from src.utils import load_roberta_toxicity_classifier
+from src.utils import load_roberta_toxicity_classifier, toxicity_evaluation_scalar
 
 logging.set_verbosity_error()
 
@@ -69,12 +67,8 @@ def run_1dataset(data_dir, output_dir):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(
-        description="Pre-process dataset and sort by toxicity score."
-    )
-    parser.add_argument("--data_dir", type=str, default="./data",
-                        help="Directory containing the train split JSONL files.")
-    parser.add_argument("--output_dir", type=str, default="./data_processed",
-                        help="Root directory for processed output files.")
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--data_dir", type=str, default="./data")
+    parser.add_argument("--output_dir", type=str, default="./data_processed")
     args = parser.parse_args()
     run_1dataset(args.data_dir, args.output_dir)

@@ -226,6 +226,7 @@ def generate_response(
                 temperature=0.7,
                 top_p=0.9,
             )
+            
             generated_tokens = generate_outputs.sequences[:, input_len:]
             steered_texts = [
                 tokenizer.decode(generated_tokens[i], skip_special_tokens=True)
