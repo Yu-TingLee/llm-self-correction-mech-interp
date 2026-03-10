@@ -1,28 +1,32 @@
-import argparse, json
+import argparse
+import json
 import os
-from zipfile import Path
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.ticker import MultipleLocator, AutoMinorLocator
+from matplotlib.ticker import AutoMinorLocator, MultipleLocator
 
 def nice_notation(a: float) -> str:
     s = f"{abs(a):g}"
-    return ("−" + s) if a < 0 else s  # Unicode minus
+    return ("\u2212" + s) if a < 0 else s  # Unicode minus
 
-def load_curves(seq_dir: str, targets: np.ndarray, tol: float = 1e-9) -> dict[str, tuple[list[int], np.ndarray]]:
-    curves: dict[str, tuple[list[int], np.ndarray]] = {}
+
+def load_curves(
+    seq_dir: str, targets: np.ndarray, tol: float = 1e-9
+) -> dict:
+    curves = {}
 
     for d in sorted(p for p in os.listdir(seq_dir) if os.path.isdir(os.path.join(seq_dir, p))):
-        
         _, coef_str = d.rsplit("_", 1)
-        
         alpha = float(coef_str)
 
         if not np.isclose(abs(alpha), targets, atol=tol, rtol=0.0).any():
             continue
 
-        files = sorted(os.path.join(seq_dir, d, f) for f in os.listdir(os.path.join(seq_dir, d)) if f.endswith(".json"))
-
+        files = sorted(
+            os.path.join(seq_dir, d, f)
+            for f in os.listdir(os.path.join(seq_dir, d))
+            if f.endswith(".json")
+        )
         rows = [json.loads(open(f).read()) for f in files]
         if not rows or "baseline_tox" not in rows[0]:
             continue
@@ -31,16 +35,17 @@ def load_curves(seq_dir: str, targets: np.ndarray, tol: float = 1e-9) -> dict[st
         prefix, suffix = "steered_L", "_tox"
         for k in rows[0].keys():
             if k.startswith(prefix) and k.endswith(suffix):
-                mid = k[len(prefix):-len(suffix)]
+                mid = k[len(prefix) : -len(suffix)]
                 if mid.isdigit():
                     layers.append(int(mid))
         layers.sort()
 
         baseline = np.array([r["baseline_tox"] for r in rows], float)
         steered = np.array([[r[f"steered_L{L}_tox"] for L in layers] for r in rows], float)
-
-        curves[coef_str] = ([L + 1 for L in layers],
-                            (100.0 * (steered - baseline[:, None])).mean(axis=0))
+        curves[coef_str] = (
+            [L + 1 for L in layers],
+            (100.0 * (steered - baseline[:, None])).mean(axis=0),
+        )
 
     return curves
 
@@ -54,8 +59,10 @@ def plot_panel(ax, curves_group, title: str):
 
     for coef_str, xs, ys in curves_group:
         a = float(coef_str)
-        ax.plot(xs, ys, marker="o", markersize=2.5, linewidth=1.0,
-                label=rf"$\alpha={nice_notation(a)}$")
+        ax.plot(
+            xs, ys, marker="o", markersize=2.5, linewidth=1.0,
+            label=rf"$\alpha={nice_notation(a)}$",
+        )
 
     ax.set_title(title, fontsize=10, pad=2)
     ax.axhline(0, ls="--", linewidth=0.8, alpha=0.8)
@@ -78,9 +85,10 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("model_basename")
     parser.add_argument("--alpha-abs", type=float, nargs="+", required=True)
+    parser.add_argument("--steering_tag", type=str, default="steering_d1_t100")
     args = parser.parse_args()
 
-    out_dir = os.path.join("outputs", args.model_basename, "steering_d1_t100", "2_injection")
+    out_dir = os.path.join("outputs", args.model_basename, args.steering_tag, "2_injection")
     seq_dir = os.path.join(out_dir, "sequential")
     os.makedirs(out_dir, exist_ok=True)
 
@@ -90,7 +98,7 @@ def main():
     pos = [(c, *curves[c]) for c in curves if float(c) > 0]
     neg = [(c, *curves[c]) for c in curves if float(c) < 0]
     if not (pos or neg):
-        raise SystemExit("No matching nonzero alpha curves found (check --alpha-abs).")
+        raise SystemExit("No matching nonzero alpha curves found")
 
     plt.close("all")
     fig, axes = plt.subplots(2, 1, sharex=True, figsize=(3.44, 3.10), constrained_layout=True)
@@ -108,7 +116,9 @@ def main():
     fig.canvas.draw()
 
     pos_axes = [ax.get_position() for ax in axes if ax.axison]
-    x_center = 0.5 * (min(p.x0 for p in pos_axes) + max(p.x1 for p in pos_axes))
+    x_center = 0.5 * (
+        min(p.x0 for p in pos_axes) + max(p.x1 for p in pos_axes)
+    )
     fig.suptitle(args.model_basename, x=x_center, ha="center", fontsize=10, fontweight="bold")
 
     suffix = "_abs" + "_".join(f"{x:g}".replace(".", "p") for x in args.alpha_abs)
