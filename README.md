@@ -37,8 +37,8 @@ Results show that the tested models are consistently steered.</em>
 <p align="center">
   <img src="./images/cossim_res.png" width="100%">
   <br>
-  <em>Figure 3: We measure cosine similarity between prompt-induced shifts and steering vectors (interpretable latent directions).<br>
-Results support the view that intrinsic self-correction functions as representation steering along an interpretable latent direction.</em>
+  <em>Figure 3: We measure cosine similarity between prompt-induced shifts and steering vectors (interpretable latent directions). 
+    Results support the view that intrinsic self-correction functions as representation steering along an interpretable latent direction.</em>
 </p>
 </details>
 
