@@ -4,19 +4,13 @@ This repository contains the official implementation for the paper **Intrinsic S
 Warning: Some data, prompts, and model outputs may contain toxic or offensive language.
 
 ## Experimental Results
-TL;DR: We propose a mechanisic analysis that links intrinsic self-correction to representation steering along interpretable latent directions.
-
-<details>
-<summary><b>Overview: intrinsic self-correction as representation steering.</b></summary><br>
+**TL;DR:** We propose a mechanisic analysis that links intrinsic self-correction to representation steering along interpretable latent directions.
 
 Intrinsic self-correction can steer a model's response via prompting.
-We are interested in how this steering functions mechnistically.
-To understand this phenomenon, we construct contrasive steering vectors and measure their alignement with prompt-induced representation shifts. Our results support the hypothesis that intrinsic self-correction functions as representation steering along interpretable latent directions.
+We are interested in how this steering functions mechanistically.
+To understand this phenomenon, we construct contrastive steering vectors and measure their alignment with prompt-induced representation shifts. Our results support the hypothesis that intrinsic self-correction functions as representation steering along interpretable latent directions.
 
-<br>
 <img src="./images/isc_pipeline.png" width="100%">
-</details>
-
 
 <details>
 <summary><b>Toxicity evolution under self-correction prompting.</b></summary><br>
