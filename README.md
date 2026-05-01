@@ -1,5 +1,5 @@
 # Intrinsic Self-Correction in LLMs: Towards Explainable Prompting via Mechanistic Interpretability
-This repository contains the official implementation for the paper **Intrinsic Self-Correction in LLMs: Towards Explainable Prompting via Mechanistic Interpretability**. [https://arxiv.org/abs/2505.11924](https://arxiv.org/abs/2505.11924)
+This repository contains the official implementation for the paper: **Intrinsic Self-Correction in LLMs: Towards Explainable Prompting via Mechanistic Interpretability**. [https://arxiv.org/abs/2505.11924](https://arxiv.org/abs/2505.11924)
 
 **TL;DR:** We provide a mechanisic explanation of intrinsic self-correction as representation steering along interpretable latent directions.
 
